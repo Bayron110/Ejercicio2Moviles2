@@ -13,7 +13,7 @@ export default function LoginScreens({navigation}:any) {
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    console.log(user);
+    //console.log(user);
     navigation.navigate("MyTab")
     
     // ...
@@ -22,8 +22,8 @@ export default function LoginScreens({navigation}:any) {
     const errorCode = error.code;
     const errorMessage = error.message;
 
-    console.log(errorCode);
-    console.log(errorMessage);
+    //console.log(errorCode);
+    //console.log(errorMessage);
     
     
   });
