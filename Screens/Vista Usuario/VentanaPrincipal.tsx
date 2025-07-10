@@ -13,7 +13,6 @@ export default function VentanaPrincipal() {
             <View style={styles.overlay}>
                 <Text style={styles.title}>Gestor de Tareas</Text>
 
-                {/* Funciones específicas */}
                 <View style={styles.functionBox}>
                     <Text style={styles.functionTitle}>➕ Agregar Nueva Tarea</Text>
                     <Text style={styles.functionText}>

@@ -1,10 +1,10 @@
-import { Alert, Button, ImageBackground, StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useState } from "react";
-import { ref, set } from "firebase/database";
-import { db } from "../../Firebase/Config";
-import { Picker } from "@react-native-picker/picker";
+import { Alert, Button, StyleSheet, Text, TextInput, View, ImageBackground, SafeAreaView,} from 'react-native';
+import React, { useState } from 'react';
+import { db } from '../../Firebase/Config';
+import { Picker } from '@react-native-picker/picker';
+import { ref, set } from 'firebase/database';
 
-export default function AgregarNuevaT() {
+export default function EditarScreens() {
     const [tareaId, setTareaId] = useState("");
     const [tarea, setTarea] = useState("");
     const [categoria, setCategoria] = useState("");
@@ -14,26 +14,13 @@ export default function AgregarNuevaT() {
     const [usuarios, setusuarios] = useState("");
     const [estado, setestado] = useState("PENDIENTE");
 
-    function guardar() {
-        if (
-            !tareaId.trim() ||
-            !usuarios.trim() ||
-            !categoria.trim() ||
-            !tarea.trim() ||
-            !fechaI.trim() ||
-            !fechaF.trim()
-        ) {
-            Alert.alert(
-                "Campos incompletos",
-                "Por favor completa todos los campos antes de guardar."
-            );
+    function editar() {
+        if (!tareaId.trim() || !usuarios.trim() || !categoria.trim() || !tarea.trim() || !fechaI.trim() || !fechaF.trim()) {
+            Alert.alert("Campos incompletos", "Por favor completa todos los campos antes de guardar.");
             return;
         }
 
-        const referencia = ref(
-            db,
-            `${prioridad}/${categoria}/${usuarios}/${tareaId}`
-        );
+        const referencia = ref(db, `${prioridad}/${categoria}/${usuarios}/${tareaId}`);
 
         set(referencia, {
             id: tareaId,
@@ -43,7 +30,7 @@ export default function AgregarNuevaT() {
             fechaF: fechaF,
             prioridad: prioridad,
             usuarios: usuarios,
-            estado: estado,
+            estado: estado
         }).then(() => {
             setTareaId("");
             setCategoria("");
@@ -53,24 +40,22 @@ export default function AgregarNuevaT() {
             setPrioridad("Media");
             setusuarios("");
             setestado("PENDIENTE");
-            Alert.alert("Aviso", "Tarea guardada correctamente.");
+            Alert.alert("Aviso", "Tarea editada correctamente.");
         });
     }
 
     return (
         <ImageBackground
-            source={{
-                uri: "https://images.pexels.com/photos/7699433/pexels-photo-7699433.jpeg?_gl=1*1fdtnqa*_ga*MTUwOTg1NjU5Ny4xNzM4Mjc1ODYy*_ga_8JE65Q40S6*czE3NTIxMTMzNzUkbzIwJGcxJHQxNzUyMTEzNzEwJGo1MyRsMCRoMA..",
-            }}
+            source={{ uri: "https://images.pexels.com/photos/56759/pexels-photo-56759.jpeg?_gl=1*1ihn779*_ga*MTUwOTg1NjU5Ny4xNzM4Mjc1ODYy*_ga_8JE65Q40S6*czE3NTIxMTMzNzUkbzIwJGcxJHQxNzUyMTE0NjYyJGo0NyRsMCRoMA.." }}
             style={styles.background}
             resizeMode="cover"
         >
             <View style={styles.overlay}>
-                <View style={styles.container}>
-                    <Text style={styles.title}>Guardar Nueva Tarea</Text>
+                <SafeAreaView style={styles.container}>
+                    <Text style={styles.title}>Editar Tarea</Text>
 
                     <TextInput
-                        placeholder="Ingrese el ID de la Tarea"
+                        placeholder="Ingrese el ID de la tarea"
                         onChangeText={setTareaId}
                         value={tareaId}
                         style={styles.input}
@@ -78,7 +63,7 @@ export default function AgregarNuevaT() {
                     />
 
                     <TextInput
-                        placeholder="Responsable de la Tarea"
+                        placeholder="Ingrese el responsable de la tarea"
                         onChangeText={setusuarios}
                         value={usuarios}
                         style={styles.input}
@@ -86,7 +71,7 @@ export default function AgregarNuevaT() {
                     />
 
                     <TextInput
-                        placeholder="Categoría de la Tarea"
+                        placeholder="Ingrese la categoría de la tarea"
                         onChangeText={setCategoria}
                         value={categoria}
                         style={styles.input}
@@ -94,7 +79,7 @@ export default function AgregarNuevaT() {
                     />
 
                     <TextInput
-                        placeholder="Nombre de la Tarea"
+                        placeholder="Ingresar el nombre de la tarea"
                         onChangeText={setTarea}
                         value={tarea}
                         style={styles.input}
@@ -102,7 +87,7 @@ export default function AgregarNuevaT() {
                     />
 
                     <TextInput
-                        placeholder="Fecha de Inicio"
+                        placeholder="Ingresar la fecha de inicio"
                         onChangeText={setFechaI}
                         value={fechaI}
                         style={styles.input}
@@ -110,7 +95,7 @@ export default function AgregarNuevaT() {
                     />
 
                     <TextInput
-                        placeholder="Fecha de Fin"
+                        placeholder="Ingresar la fecha de fin"
                         onChangeText={setFechaF}
                         value={fechaF}
                         style={styles.input}
@@ -138,8 +123,8 @@ export default function AgregarNuevaT() {
                         <Picker.Item label="TERMINADO" value="TERMINADO" />
                     </Picker>
 
-                    <Button title="Guardar" onPress={guardar} />
-                </View>
+                    <Button title="Editar" onPress={editar} />
+                </SafeAreaView>
             </View>
         </ImageBackground>
     );
@@ -151,42 +136,43 @@ const styles = StyleSheet.create({
     },
     overlay: {
         flex: 1,
-        
+        justifyContent: "center",
+        paddingHorizontal: 20,
     },
     container: {
         flex: 1,
-        padding: 20,
         justifyContent: "center",
     },
     title: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: "bold",
         marginBottom: 20,
         textAlign: "center",
-        color: "#3E2723",
+        color: "white",
+        textTransform: "uppercase",
+        letterSpacing: 1,
     },
     input: {
         backgroundColor: "rgba(255, 255, 255, 0.95)",
         fontSize: 16,
         marginVertical: 6,
         padding: 12,
-        borderRadius: 10,
-        borderColor: "#A1887F",
+        borderRadius: 8,
+        borderColor: "#58d68d",
         borderWidth: 1,
-        color: "#3E2723",
+        color: "#2c3e50",
     },
     label: {
         fontSize: 16,
         marginVertical: 10,
-        color: "#5D4037",
+        color: "white",
         fontWeight: "600",
     },
     picker: {
         height: 50,
         width: "100%",
-        backgroundColor: "rgba(255,255,255,0.95)",
-        borderRadius: 10,
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        borderRadius: 8,
         marginBottom: 15,
-        color: "#3E2723",
     },
 });
